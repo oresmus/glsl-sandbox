@@ -163,7 +163,7 @@ void main( void ) {
 			var quality = 2, quality_levels = [ 0.5, 1, 2, 4, 8 ];
 			var toolbar, compileButton, fullscreenButton, compileTimer, errorLines = [];
 			var code, canvas, gl, buffer, currentProgram, vertexPosition, screenVertexPosition, panButton,
-			parameters = { startTime: Date.now(), time: 0, isPaused: false, pauseTime: 0,
+			parameters = { startTime: Date.now(), time: 0, isPaused: false,
 			               mouseX: 0.5, mouseY: 0.5, screenWidth: 0, screenHeight: 0 },
 			surface = { centerX: 0, centerY: 0, width: 1, height: 1, isPanning: false, isZooming: false, lastX: 0, lastY: 0 },
 			frontTarget, backTarget, screenProgram, getWebGL, resizer = {}, compileOnChangeCode = true;
@@ -276,7 +276,7 @@ void main( void ) {
 				pauseButton.textContent = 'pause';
 				pauseButton.addEventListener( 'click', function ( event ) {
 
-					if ( isRunning() ) {
+					if ( ! parameters.isPaused ) {
 
 						pauseButton.textContent = 'resume';
 						// do pause
@@ -485,10 +485,6 @@ void main( void ) {
 
 			function isCodeVisible() {
 				return code && code.getWrapperElement().style.display !== 'none';
-			}
-
-			function isRunning() {
-				return ! parameters.isPaused;
 			}
 
 			var hideUITimer;
@@ -896,6 +892,11 @@ void main( void ) {
 				if ( ! parameters.isPaused ) {
 
                                     parameters.time = Date.now() - parameters.startTime;
+
+                                } else {
+
+                                    // increase startTime to keep parameters.time fixed
+                                    parameters.startTime = Date.now() - parameters.time;
 
                                 }
 
