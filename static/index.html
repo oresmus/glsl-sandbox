@@ -893,7 +893,11 @@ void main( void ) {
 
 				if ( !currentProgram ) return;
 
-				parameters.time = Date.now() - parameters.startTime;
+				if ( ! parameters.isPaused ) {
+
+                                    parameters.time = Date.now() - parameters.startTime;
+
+                                }
 
 				// Set uniforms for custom shader
 
