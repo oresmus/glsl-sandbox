@@ -163,7 +163,8 @@ void main( void ) {
 			var quality = 2, quality_levels = [ 0.5, 1, 2, 4, 8 ];
 			var toolbar, compileButton, fullscreenButton, compileTimer, errorLines = [];
 			var code, canvas, gl, buffer, currentProgram, vertexPosition, screenVertexPosition, panButton,
-			parameters = { startTime: Date.now(), time: 0, mouseX: 0.5, mouseY: 0.5, screenWidth: 0, screenHeight: 0 },
+			parameters = { startTime: Date.now(), time: 0, isPaused: false, pauseTime: 0,
+			               mouseX: 0.5, mouseY: 0.5, screenWidth: 0, screenHeight: 0 },
 			surface = { centerX: 0, centerY: 0, width: 1, height: 1, isPanning: false, isZooming: false, lastX: 0, lastY: 0 },
 			frontTarget, backTarget, screenProgram, getWebGL, resizer = {}, compileOnChangeCode = true;
 
@@ -270,6 +271,27 @@ void main( void ) {
 				}, false );
 
 				toolbar.appendChild( select );
+
+				var pauseButton = document.createElement( 'button' );
+				pauseButton.textContent = 'pause';
+				pauseButton.addEventListener( 'click', function ( event ) {
+
+					if ( isRunning() ) {
+
+						pauseButton.textContent = 'resume';
+						// do pause
+						parameters.isPaused = true;
+
+					} else {
+
+						pauseButton.textContent = 'pause';
+						// do resume
+						parameters.isPaused = false;
+
+					}
+
+				}, false );
+				toolbar.appendChild( pauseButton );
 
 				compileButton = document.createElement( 'button' );
 				compileButton.textContent = 'compile';
@@ -463,6 +485,10 @@ void main( void ) {
 
 			function isCodeVisible() {
 				return code && code.getWrapperElement().style.display !== 'none';
+			}
+
+			function isRunning() {
+				return ! parameters.isPaused;
 			}
 
 			var hideUITimer;
