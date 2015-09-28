@@ -220,18 +220,18 @@ void main( void ) {
 
 				rightside.appendChild( fullscreenButton );
 
-				var button = document.createElement( 'a' );
-				button.textContent = 'gallery';
-				button.href = 'http://glsl.heroku.com/';
-				rightside.appendChild( button );
+				var galleryButton = document.createElement( 'a' );
+				galleryButton.textContent = 'gallery';
+				galleryButton.href = 'http://glsl.heroku.com/';
+				rightside.appendChild( galleryButton );
 
-				var button = document.createElement( 'button' );
-				button.textContent = 'hide code';
-				button.addEventListener( 'click', function ( event ) {
+				var hideshowButton = document.createElement( 'button' );
+				hideshowButton.textContent = 'hide code';
+				hideshowButton.addEventListener( 'click', function ( event ) {
 
 					if ( isCodeVisible() ) {
 
-						button.textContent = 'show code';
+						hideshowButton.textContent = 'show code';
 						code.getWrapperElement().style.display = 'none';
 						compileButton.style.visibility = 'hidden';
 						set_save_button('hidden');
@@ -240,7 +240,7 @@ void main( void ) {
 
 					} else {
 
-						button.textContent = 'hide code';
+						hideshowButton.textContent = 'hide code';
 						code.getWrapperElement().style.display = '';
 						compileButton.style.visibility = 'visible';
 						set_save_button('visible');
@@ -249,7 +249,7 @@ void main( void ) {
 					}
 
 				}, false );
-				toolbar.appendChild( button );
+				toolbar.appendChild( hideshowButton );
 
 				var select = document.createElement( 'select' );
 
